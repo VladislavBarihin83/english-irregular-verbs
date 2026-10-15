@@ -1,1 +1,80 @@
-
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Irregular Verbs — интерактивный курс, 7 класс</title>
+<style>
+:root{--ink:#1e293b;--muted:#64748b;--blue:#2563eb;--pale:#eff6ff;--green:#15803d;--red:#b91c1c;--line:#dbe3ef}
+*{box-sizing:border-box}body{margin:0;background:#f4f7fb;color:var(--ink);font:16px/1.55 system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif}
+header{background:linear-gradient(135deg,#173b78,#3977dc);color:white;padding:32px 18px}
+.wrap{max-width:1000px;margin:auto;padding:0 16px}header h1{margin:0 0 8px;font-size:clamp(28px,5vw,42px)}header p{max-width:720px;margin:0;color:#e5edff}
+main{padding:22px 0 48px}.layout{display:grid;grid-template-columns:230px 1fr;gap:18px;align-items:start}
+nav,.panel,.lesson-card{background:white;border:1px solid var(--line);border-radius:16px;box-shadow:0 4px 18px #0f172a0a}
+nav{padding:14px;position:sticky;top:12px}nav button{display:block;width:100%;text-align:left;margin:4px 0;padding:10px;border:0;border-radius:10px;background:transparent;color:var(--ink);cursor:pointer}nav button.active,nav button:hover{background:var(--pale);color:var(--blue)}
+.panel{padding:clamp(16px,3vw,28px);min-height:500px}.eyebrow{font-size:12px;text-transform:uppercase;letter-spacing:.1em;color:var(--blue);font-weight:800}
+h2{margin:.2em 0 .5em;font-size:28px}h3{margin:1.1em 0 .4em}p{margin:.5em 0 1em}.muted{color:var(--muted)}.pill{display:inline-block;padding:4px 10px;border-radius:999px;background:var(--pale);color:var(--blue);font-size:13px;font-weight:700}
+table{border-collapse:collapse;width:100%;margin:14px 0;font-size:15px}th,td{border-bottom:1px solid var(--line);padding:10px 9px;text-align:left}th{background:#f8fafc}td b{color:#1d4ed8}
+button.action{border:0;background:var(--blue);color:white;padding:10px 15px;border-radius:10px;font-weight:700;cursor:pointer;margin:6px 5px 6px 0}button.secondary{background:#e8eef8;color:#1e3a8a}.flash{padding:22px;background:#f8fbff;border:1px dashed #93b4ec;border-radius:14px;text-align:center;margin:16px 0}.flash .word{font-size:32px;font-weight:800}.answer{display:none;margin-top:10px;font-size:18px}.q{padding:14px 0;border-bottom:1px solid var(--line)}.q label{display:block;padding:7px 10px;margin:5px 0;background:#f8fafc;border-radius:8px;cursor:pointer}.q input{margin-right:8px}.feedback{margin-top:6px;font-weight:700}.good{color:var(--green)}.bad{color:var(--red)}.score{font-size:20px;font-weight:800}.progress{height:8px;background:#e2e8f0;border-radius:9px;overflow:hidden;margin:10px 0 18px}.progress span{display:block;height:100%;background:#3b82f6;width:0}.tip{background:#fffbeb;border-left:4px solid #f59e0b;padding:12px 14px;border-radius:8px}.hidden{display:none}.footer{font-size:13px;color:var(--muted);margin-top:24px}
+@media(max-width:720px){.layout{grid-template-columns:1fr}nav{position:static;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:3px}nav button{font-size:14px}.panel{min-height:0}table{font-size:13px}th,td{padding:8px 5px}}
+</style></head>
+<body>
+<header><div class="wrap"><div class="pill" style="background:#ffffff22;color:white">ENGLISH · 7 КЛАСС</div><h1>Irregular Verbs</h1><p>Интерактивный курс неправильных глаголов: короткие уроки, карточки для повторения, тесты с автоматической проверкой и ответы с объяснениями.</p></div></header>
+<main class="wrap"><div class="layout">
+<nav aria-label="Уроки">
+<button class="active" data-page="start">🏠 Старт</button><button data-page="lesson1">Урок 1 · Основы</button><button data-page="lesson2">Урок 2 · Действия</button><button data-page="lesson3">Урок 3 · Еда и путь</button><button data-page="cards">🃏 Карточки</button><button data-page="test">✅ Итоговый тест</button><button data-page="dictionary">📖 Справочник</button>
+</nav>
+<section class="panel" id="content" aria-live="polite"></section>
+</div></main>
+<script>
+const verbs=[
+["be","was / were","been","быть","I was at home yesterday."],
+["become","became","become","становиться","She became a good player."],
+["begin","began","begun","начинать","The lesson began at nine."],
+["break","broke","broken","ломать","He broke his pencil."],
+["bring","brought","brought","приносить","I brought my book."],
+["build","built","built","строить","They built a tree house."],
+["buy","bought","bought","покупать","We bought some apples."],
+["catch","caught","caught","ловить","She caught the ball."],
+["choose","chose","chosen","выбирать","Choose a blue pen."],
+["come","came","come","приходить","He came home late."],
+["do","did","done","делать","I did my homework."],
+["draw","drew","drawn","рисовать","She drew a cat."],
+["drink","drank","drunk","пить","We drank water."],
+["drive","drove","driven","водить машину","Dad drove to work."],
+["eat","ate","eaten","есть","They ate breakfast."]
+];
+const tests=[
+{q:"Yesterday I ___ my homework.",opts:["do","did","done"],a:1,why:"После yesterday используем Past Simple: did."},
+{q:"The past participle of go isn't in this course. Choose the correct third form of eat.",opts:["ate","eaten","eated"],a:1,why:"Три формы: eat – ate – eaten."},
+{q:"She has ___ a picture.",opts:["drew","drawn","draw"],a:1,why:"После has/have нужен Past Participle: drawn."},
+{q:"We ___ a new ball last week.",opts:["buy","bought","brought"],a:1,why:"Buy – bought – bought; bought означает «купили»."},
+{q:"They ___ to school at eight yesterday.",opts:["came","come","coming"],a:0,why:"Come – came – come. Для завершённого действия в прошлом — came."},
+{q:"Choose the correct forms: break – ... – ...",opts:["breaked – breaked","broke – broken","broke – broke"],a:1,why:"Правильная тройка: break – broke – broken."},
+{q:"I have ___ my book to class.",opts:["brought","bring","brang"],a:0,why:"Bring – brought – brought."},
+{q:"He ___ water after the game.",opts:["drunk","drank","drink"],a:1,why:"Past Simple от drink — drank. Drunk — третья форма."},
+{q:"They have ___ a small house.",opts:["built","builded","builted"],a:0,why:"Build – built – built."},
+{q:"Which sentence is correct?",opts:["She buyed a bag yesterday.","She bought a bag yesterday.","She has bought a bag yesterday."],a:1,why:"Bought — Past Simple. В стандартном школьном английском yesterday не сочетается с Present Perfect."}
+];
+let page="start",cardIndex=0,showCard=false,progress=JSON.parse(localStorage.getItem("verbsCourseProgress")||'{"done":[],"best":0}');
+const $=s=>document.querySelector(s);
+function save(){localStorage.setItem("verbsCourseProgress",JSON.stringify(progress))}
+function table(rows){return `<div style="overflow-x:auto"><table><thead><tr><th>Infinitive</th><th>Past Simple</th><th>Past Participle</th><th>Перевод</th></tr></thead><tbody>${rows.map(v=>`<tr><td><b>${v[0]}</b></td><td>${v[1]}</td><td>${v[2]}</td><td>${v[3]}</td></tr>`).join("")}</tbody></table></div>`}
+function lesson(title,subtitle,range,rule,example){return `<div class="eyebrow">${subtitle}</div><h2>${title}</h2><p>${rule}</p>${table(verbs.slice(...range))}<div class="tip"><b>Пример:</b> ${example}</div><h3>Мини-проверка</h3><p>Закрой таблицу и назови три формы каждого глагола вслух. Затем потренируйся с карточками.</p><button class="action" onclick="go('cards')">Перейти к карточкам</button><button class="action secondary" onclick="go('test')">К тесту</button>`}
+function render(){
+document.querySelectorAll("nav button").forEach(b=>b.classList.toggle("active",b.dataset.page===page));
+let c=$("#content");
+if(page==="start") c.innerHTML=`<div class="eyebrow">ТВОЙ ПЛАН</div><h2>Добро пожаловать!</h2><p>В английском многие глаголы образуют прошедшее время не с помощью <b>-ed</b>. Например: <b>buy – bought – bought</b>.</p><div class="progress"><span style="width:${progress.done.length/3*100}%"></span></div><p class="score">Пройдено уроков: ${progress.done.length}/3 · Лучший результат теста: ${progress.best}/10</p><h3>Как заниматься</h3><ol><li>Изучи один короткий урок.</li><li>Повтори формы с карточками.</li><li>Пройди итоговый тест и прочитай пояснения к ответам.</li></ol><button class="action" onclick="go('lesson1')">Начать обучение</button><p class="footer">Прогресс сохраняется в этом браузере на этом устройстве. Интернет для работы самого курса не требуется.</p>`;
+if(page==="lesson1"){c.innerHTML=lesson("Основные глаголы","УРОК 1 · 5 ГЛАГОЛОВ",[0,5],"Три формы: Infinitive — начальная форма, Past Simple — действие в прошлом, Past Participle — часто используется с have/has.","I was tired yesterday. — Я вчера устал.");}
+if(page==="lesson2"){c.innerHTML=lesson("Глаголы для повседневных действий","УРОК 2 · 5 ГЛАГОЛОВ",[5,10],"Некоторые глаголы меняют гласную, другие имеют одинаковые вторую и третью формы. Формы лучше учить тройками.","We bought a book and brought it home. — Мы купили книгу и принесли её домой.");}
+if(page==="lesson3"){c.innerHTML=lesson("Дом, школа и еда","УРОК 3 · 5 ГЛАГОЛОВ",[10,15],"После did в вопросах и отрицаниях используется начальная форма: Did you do it? Не говорим Did you did it?","I ate breakfast and drank water. — Я позавтракал и выпил воды.");}
+if(page==="cards"){let v=verbs[cardIndex];c.innerHTML=`<div class="eyebrow">ТРЕНИРОВКА · ${cardIndex+1} ИЗ ${verbs.length}</div><h2>Карточки для повторения</h2><div class="progress"><span style="width:${(cardIndex+1)/verbs.length*100}%"></span></div><div class="flash"><div class="muted">Назови формы и перевод</div><div class="word">${v[0]}</div><button class="action" onclick="toggleCard()">${showCard?"Скрыть ответ":"Показать ответ"}</button><div class="answer" style="display:${showCard?"block":"none"}"><b>${v[1]} — ${v[2]}</b><br>${v[3]}<p><i>${v[4]}</i></p></div></div><button class="action secondary" onclick="moveCard(-1)">← Назад</button><button class="action" onclick="moveCard(1)">Следующая →</button><p class="muted">Совет: произнеси все три формы вслух, а затем составь своё предложение.</p>`;}
+if(page==="test"){c.innerHTML=`<div class="eyebrow">ПРОВЕРЬ СЕБЯ</div><h2>Итоговый тест</h2><p>10 вопросов. Выбери один ответ в каждом задании, затем нажми «Проверить ответы». Объяснения появятся сразу.</p><form id="quiz">${tests.map((t,i)=>`<div class="q"><b>${i+1}. ${t.q}</b>${t.opts.map((o,j)=>`<label><input type="radio" name="q${i}" value="${j}">${o}</label>`).join("")}<div id="f${i}" class="feedback"></div></div>`).join("")}<button class="action" type="submit">Проверить ответы</button><button class="action secondary" type="button" onclick="resetQuiz()">Начать заново</button></form><div id="result"></div>`;$("#quiz").addEventListener("submit",e=>{e.preventDefault();let score=0;tests.forEach((t,i)=>{let s=document.querySelector('input[name="q'+i+'"]:checked');let ok=s&&+s.value===t.a;if(ok)score++;let f=$("#f"+i);f.className="feedback "+(ok?"good":"bad");f.textContent=(ok?"Верно. ":"Ответ: "+t.opts[t.a]+". ")+t.why});progress.best=Math.max(progress.best,score);save();$("#result").innerHTML=`<p class="score">Результат: ${score}/10</p><p>${score>=8?"Отличная работа!":"Повтори карточки и попробуй ещё раз."}</p>`;});}
+if(page==="dictionary"){c.innerHTML=`<div class="eyebrow">СПРАВОЧНИК</div><h2>Все глаголы курса</h2><p>Используй таблицу для повторения и подготовки к тесту.</p>${table(verbs)}<button class="action" onclick="go('cards')">Повторить карточки</button>`;}
+}
+function go(p){page=p;render();window.scrollTo({top:0,behavior:"smooth"})}
+function toggleCard(){showCard=!showCard;render()}
+function moveCard(n){cardIndex=(cardIndex+n+verbs.length)%verbs.length;showCard=false;render()}
+function resetQuiz(){render()}
+document.querySelectorAll("nav button").forEach(b=>b.addEventListener("click",()=>go(b.dataset.page)));
+render();
+</script></body></html>
